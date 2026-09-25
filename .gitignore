@@ -1,0 +1,19 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+
+# Supabase local/temporary state
+supabase/.temp/
+supabase/.branches/
+
+# Test/runtime artifacts
+coverage/
+dist/
+.tmp/
