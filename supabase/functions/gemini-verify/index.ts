@@ -308,6 +308,20 @@ const createHandler = async (req: Request): Promise<Response> => {
       )
     }
 
+    // If status is approved, award points
+    if (newStatus === 'approved') {
+      try {
+        // Call the award_points_for_submission function
+        await supabase.rpc('award_points_for_submission', {
+          p_submission_id: submission_id
+        })
+      } catch (awardError) {
+        console.error("Error awarding points:", awardError)
+        // Continue with the response even if points awarding fails
+        // The submission is still approved, just points weren't awarded
+      }
+    }
+
     // Return the verification result
     return new Response(
       JSON.stringify({

@@ -3,7 +3,6 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!
 const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-const supabase = createClient(supabaseUrl, supabaseServiceRoleKey)
 
 interface SubmissionResponse {
   id: string
@@ -26,12 +25,148 @@ const createHandler = async (req: Request): Promise<Response> => {
       return new Response("ok", {
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Authorization",
         },
       })
     }
 
+    // Handle GET request for retrieving a specific submission
+    if (req.method === "GET") {
+      console.log("Handling GET request for submission retrieval")
+
+      // Get the authorization header
+      const authHeader = req.headers.get("Authorization")
+      console.log("Auth header present:", !!authHeader)
+      if (!authHeader?.startsWith("Bearer ")) {
+        console.log("Missing or invalid auth header")
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: "AUTH_MISSING_TOKEN",
+              message: "Authorization header missing or invalid",
+            },
+          }),
+          { status: 401, headers: { "Content-Type": "application/json" } }
+        )
+      }
+
+      const accessToken = authHeader.substring(7) // Remove 'Bearer ' prefix
+      console.log("Step 2: Getting user from token")
+
+      // Create supabase client with the user's JWT for RLS
+      const supabase = createClient(supabaseUrl, accessToken)
+
+      // Get the user from Supabase using the JWT
+      const { data: { user }, error: userError } = await supabase.auth.getUser(accessToken)
+      console.log("Get user result:", user ? `user ${user.id}` : "null", "error:", userError)
+
+      if (userError || !user) {
+        console.error("Get user error:", userError)
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: "AUTH_INVALID_TOKEN",
+              message: "Invalid or expired token",
+            },
+          }),
+          { status: 401, headers: { "Content-Type": "application/json" } }
+        )
+      }
+      console.log("Authenticated user:", user.id)
+
+      // Extract submission ID from URL
+      const url = new URL(req.url);
+      const pathParts = url.pathname.split('/');
+      // Expected path: /submissions/:id or /submissions/:id/
+      const submissionId = pathParts[pathParts.length - 2] || pathParts[pathParts.length - 1];
+
+      // Handle trailing slash
+      if (!submissionId || submissionId === '') {
+        // Try to get from query param as fallback
+        const searchParams = new URLSearchParams(url.search);
+        const paramId = searchParams.get('id');
+        if (paramId) {
+          console.log("Using ID from query parameter:", paramId);
+          // Note: This is a fallback, ideally we'd use path parameter
+        } else {
+          return new Response(
+            JSON.stringify({
+              error: {
+                code: "MISSING_SUBMISSION_ID",
+                message: "submission_id is required",
+              },
+            }),
+            { status: 400, headers: { "Content-Type": "application/json" } }
+          )
+        }
+      } else {
+        console.log("Using ID from path parameter:", submissionId);
+      }
+
+      // Use the submission ID we extracted
+      const finalSubmissionId = submissionId && submissionId !== '' ? submissionId : url.searchParams.get('id');
+
+      if (!finalSubmissionId) {
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: "MISSING_SUBMISSION_ID",
+              message: "submission_id is required",
+            },
+          }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        )
+      }
+
+      // Fetch the specific submission
+      const { data: submission, error: submissionError } = await supabase
+        .from('submissions')
+        .select('id, user_id, image_url, latitude, longitude, accuracy, status, verification_result, points_awarded, submitted_at, updated_at')
+        .eq('id', finalSubmissionId)
+        .eq('user_id', user.id) // Ensure user can only access their own submissions
+        .single()
+
+      if (submissionError) {
+        console.error("Submission fetch error:", submissionError)
+        // Handle different error types
+        if (submissionError.code === 'PGRST116') {
+          // No rows returned
+          return new Response(
+            JSON.stringify({
+              error: {
+                code: "SUBMISSION_NOT_FOUND",
+                message: "Submission not found or access denied",
+              },
+            }),
+            { status: 404, headers: { "Content-Type": "application/json" } }
+          )
+        }
+        return new Response(
+          JSON.stringify({
+            error: {
+              code: "SUBMISSION_FETCH_FAILED",
+              message: "Failed to fetch submission",
+            },
+          }),
+          { status: 500, headers: { "Content-Type": "application/json" } }
+        )
+      }
+
+      // Return the submission data
+      console.log("=== SUBMISSIONS FUNCTION END (SUCCESS - GET) ===")
+      return new Response(
+        JSON.stringify({
+          submission,
+        }),
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        }
+      )
+    }
+
+    // Handle POST request for creating a submission (existing functionality)
     if (req.method !== "POST") {
       console.log("Method not allowed:", req.method)
       return new Response(
@@ -62,6 +197,10 @@ const createHandler = async (req: Request): Promise<Response> => {
 
     const accessToken = authHeader.substring(7) // Remove 'Bearer ' prefix
     console.log("Step 2: Getting user from token")
+
+    // Create supabase client with the user's JWT for RLS
+    const supabase = createClient(supabaseUrl, accessToken)
+
     // Get the user from Supabase using the JWT
     const { data: { user }, error: userError } = await supabase.auth.getUser(accessToken)
     console.log("Get user result:", user ? `user ${user.id}` : "null", "error:", userError)
@@ -305,8 +444,13 @@ const createHandler = async (req: Request): Promise<Response> => {
 
     // Compute SHA-256 hash of image data for duplicate detection
     console.log("Step 5: Computing SHA-256 hash")
-    const hashBuffer = await crypto.subtle.digest('SHA-256', imageData.data)
-    const hashArray = Array.from(new Uint8Array(hashBuffer))
+    // Create a copy of the image data with a guaranteed regular ArrayBuffer
+    const imageDataCopy = new Uint8Array(imageData.data.length)
+    imageDataCopy.set(imageData.data)
+    const hashBuffer = await crypto.subtle.digest('SHA-256', imageDataCopy)
+    // The digest result should always be an ArrayBuffer, but convert just in case
+    const hashArrayBuffer = hashBuffer instanceof ArrayBuffer ? hashBuffer : new Uint8Array(hashBuffer).buffer
+    const hashArray = Array.from(new Uint8Array(hashArrayBuffer))
     const imageHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
     console.log("Image hash:", imageHash)
 
@@ -355,7 +499,7 @@ const createHandler = async (req: Request): Promise<Response> => {
     console.log("Insert successful:", submissionData)
 
     // Return successful response
-    console.log("=== SUBMISSIONS FUNCTION END (SUCCESS) ===")
+    console.log("=== SUBMISSIONS FUNCTION END (SUCCESS - POST) ===")
     return new Response(
       JSON.stringify({
         id: submissionData.id,
