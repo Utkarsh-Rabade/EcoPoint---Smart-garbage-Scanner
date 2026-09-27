@@ -1,0 +1,360 @@
+/*
+ * EcoPoints Design Tokens
+ * ─────────────────────────────────────────────────────────────────────────────
+ * All tokens are defined here as CSS custom properties.
+ * Import this file once via globals.css — never reference raw values in
+ * component CSS; always use a token.
+ *
+ * Naming convention:
+ *   --ep-{category}-{scale|variant}
+ *
+ * Category prefixes:
+ *   color-     Color values
+ *   font-      Typography
+ *   space-     Spacing scale
+ *   radius-    Border radius
+ *   shadow-    Box shadows
+ *   border-    Border widths and colors
+ *   motion-    Animation durations and easings
+ *   z-         Z-index scale
+ */
+
+/* ─── COLORS ─────────────────────────────────────────────────────────────────
+ *
+ * Palette built on two axes:
+ *   1. Greens (forest, moss, sage, fern) — primary brand
+ *   2. Earth tones (clay, sand, wheat, bark) — warmth / accents
+ *   3. Neutrals — off-white base, warm grays for text
+ *   4. Semantic — success, warning, error, info
+ *
+ * We deliberately avoid:
+ *   - Cool grays (#6b7280 / slate family)
+ *   - Purple, blue, indigo
+ *   - Black-on-white high-contrast base
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Raw palette (primitives) — rarely reference directly ──────────────── */
+
+  /* Greens */
+  --ep-palette-forest-900: #1a2e1e;
+  --ep-palette-forest-800: #22391c;  /* main brand forest */
+  --ep-palette-forest-700: #2d4a28;
+  --ep-palette-forest-600: #3a5c33;
+  --ep-palette-forest-500: #4a7040;
+  --ep-palette-forest-400: #668a5b;
+  --ep-palette-forest-300: #8aac7e;
+  --ep-palette-forest-200: #b5cead;
+  --ep-palette-forest-100: #d8e8d2;
+  --ep-palette-forest-50:  #eef5eb;
+
+  /* Sage / muted greens */
+  --ep-palette-sage-700: #4a5e46;
+  --ep-palette-sage-600: #5c7258;
+  --ep-palette-sage-500: #6f8769;
+  --ep-palette-sage-400: #8fa389;
+  --ep-palette-sage-300: #b0bfab;
+  --ep-palette-sage-200: #cdd8c9;
+  --ep-palette-sage-100: #e4ebe2;
+  --ep-palette-sage-50:  #f2f5f1;
+
+  /* Earth tones */
+  --ep-palette-clay-600:  #8c5e3a;
+  --ep-palette-clay-500:  #a67149;
+  --ep-palette-clay-400:  #bf8d65;
+  --ep-palette-clay-300:  #d4aa8a;
+  --ep-palette-clay-200:  #e6cdb2;
+  --ep-palette-clay-100:  #f3e5d3;
+  --ep-palette-clay-50:   #faf2ea;
+
+  --ep-palette-wheat-300: #d9c89a;
+  --ep-palette-wheat-200: #e8dab9;
+  --ep-palette-wheat-100: #f2ead4;
+  --ep-palette-wheat-50:  #faf6ed;
+
+  --ep-palette-bark-700:  #3d2b1f;
+  --ep-palette-bark-600:  #5a3e2e;
+  --ep-palette-bark-500:  #7a5540;
+  --ep-palette-bark-400:  #9c7460;
+
+  /* Warm neutrals */
+  --ep-palette-neutral-950: #1c1916;
+  --ep-palette-neutral-900: #28241f;
+  --ep-palette-neutral-800: #3a3530;
+  --ep-palette-neutral-700: #514b44;
+  --ep-palette-neutral-600: #6b635a;
+  --ep-palette-neutral-500: #857d74;
+  --ep-palette-neutral-400: #a09891;
+  --ep-palette-neutral-300: #beb7b1;
+  --ep-palette-neutral-200: #d6d1cc;
+  --ep-palette-neutral-100: #e9e5e1;
+  --ep-palette-neutral-50:  #f5f3f0;
+  --ep-palette-neutral-25:  #faf8f6;
+  --ep-palette-neutral-0:   #fefcfa;  /* warm off-white base */
+
+  /* ── Semantic color tokens ─────────────────────────────────────────────── */
+
+  /* Brand */
+  --ep-color-brand:           var(--ep-palette-forest-800);
+  --ep-color-brand-hover:     var(--ep-palette-forest-700);
+  --ep-color-brand-active:    var(--ep-palette-forest-900);
+  --ep-color-brand-subtle:    var(--ep-palette-forest-50);
+  --ep-color-brand-muted:     var(--ep-palette-forest-100);
+  --ep-color-brand-border:    var(--ep-palette-forest-200);
+  --ep-color-brand-text:      var(--ep-palette-forest-800);
+  --ep-color-brand-text-on:   #fefcfa;   /* text on brand backgrounds */
+
+  /* Secondary accent — sage */
+  --ep-color-accent:          var(--ep-palette-sage-500);
+  --ep-color-accent-hover:    var(--ep-palette-sage-600);
+  --ep-color-accent-subtle:   var(--ep-palette-sage-50);
+  --ep-color-accent-muted:    var(--ep-palette-sage-100);
+  --ep-color-accent-border:   var(--ep-palette-sage-200);
+  --ep-color-accent-text:     var(--ep-palette-sage-700);
+
+  /* Tertiary accent — clay (warm earth) */
+  --ep-color-earth:           var(--ep-palette-clay-500);
+  --ep-color-earth-subtle:    var(--ep-palette-clay-50);
+  --ep-color-earth-muted:     var(--ep-palette-clay-100);
+  --ep-color-earth-border:    var(--ep-palette-clay-200);
+  --ep-color-earth-text:      var(--ep-palette-clay-600);
+
+  /* Backgrounds */
+  --ep-color-bg-page:         var(--ep-palette-neutral-0);
+  --ep-color-bg-subtle:       var(--ep-palette-neutral-25);
+  --ep-color-bg-muted:        var(--ep-palette-neutral-50);
+  --ep-color-bg-inset:        var(--ep-palette-neutral-100);
+  --ep-color-bg-overlay:      #ffffff;
+
+  /* Surface (panels, cards) */
+  --ep-color-surface:         #ffffff;
+  --ep-color-surface-raised:  #ffffff;
+  --ep-color-surface-sunken:  var(--ep-palette-neutral-25);
+
+  /* Text hierarchy */
+  --ep-color-text-primary:    var(--ep-palette-neutral-900);
+  --ep-color-text-secondary:  var(--ep-palette-neutral-700);
+  --ep-color-text-tertiary:   var(--ep-palette-neutral-500);
+  --ep-color-text-disabled:   var(--ep-palette-neutral-400);
+  --ep-color-text-inverse:    var(--ep-palette-neutral-0);
+  --ep-color-text-brand:      var(--ep-palette-forest-800);
+  --ep-color-text-earth:      var(--ep-palette-clay-600);
+
+  /* Borders */
+  --ep-color-border:          var(--ep-palette-neutral-200);
+  --ep-color-border-strong:   var(--ep-palette-neutral-300);
+  --ep-color-border-subtle:   var(--ep-palette-neutral-100);
+  --ep-color-border-brand:    var(--ep-palette-forest-200);
+  --ep-color-border-focus:    var(--ep-palette-forest-500);
+
+  /* Semantic — status */
+  --ep-color-success:         var(--ep-palette-forest-600);
+  --ep-color-success-subtle:  var(--ep-palette-forest-50);
+  --ep-color-success-muted:   var(--ep-palette-forest-100);
+  --ep-color-success-border:  var(--ep-palette-forest-200);
+  --ep-color-success-text:    var(--ep-palette-forest-800);
+
+  --ep-color-warning:         #b45309;  /* amber-700 — not neon */
+  --ep-color-warning-subtle:  #fffbeb;
+  --ep-color-warning-muted:   #fef3c7;
+  --ep-color-warning-border:  #fde68a;
+  --ep-color-warning-text:    #92400e;
+
+  --ep-color-error:           #b91c1c;  /* red-700 — restrained */
+  --ep-color-error-subtle:    #fef2f2;
+  --ep-color-error-muted:     #fee2e2;
+  --ep-color-error-border:    #fca5a5;
+  --ep-color-error-text:      #991b1b;
+
+  --ep-color-info:            var(--ep-palette-sage-600);
+  --ep-color-info-subtle:     var(--ep-palette-sage-50);
+  --ep-color-info-muted:      var(--ep-palette-sage-100);
+  --ep-color-info-border:     var(--ep-palette-sage-200);
+  --ep-color-info-text:       var(--ep-palette-sage-700);
+
+  /* Points / rewards — golden wheat */
+  --ep-color-points:          #b45309;
+  --ep-color-points-subtle:   var(--ep-palette-wheat-50);
+  --ep-color-points-muted:    var(--ep-palette-wheat-100);
+  --ep-color-points-border:   var(--ep-palette-wheat-200);
+  --ep-color-points-text:     #92400e;
+
+
+  /* ─── TYPOGRAPHY ──────────────────────────────────────────────────────── */
+
+  /* Font families — loaded via next/font in layout.tsx */
+  --ep-font-sans:   var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --ep-font-mono:   var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Scale (modular, ~1.25 ratio) */
+  --ep-font-size-2xs: 0.6875rem;   /* 11px */
+  --ep-font-size-xs:  0.75rem;     /* 12px */
+  --ep-font-size-sm:  0.8125rem;   /* 13px */
+  --ep-font-size-md:  0.9375rem;   /* 15px — body default */
+  --ep-font-size-lg:  1.0625rem;   /* 17px */
+  --ep-font-size-xl:  1.25rem;     /* 20px */
+  --ep-font-size-2xl: 1.5rem;      /* 24px */
+  --ep-font-size-3xl: 1.875rem;    /* 30px */
+  --ep-font-size-4xl: 2.25rem;     /* 36px */
+  --ep-font-size-5xl: 3rem;        /* 48px */
+
+  /* Line heights */
+  --ep-leading-none:    1;
+  --ep-leading-tight:   1.25;
+  --ep-leading-snug:    1.375;
+  --ep-leading-normal:  1.5;
+  --ep-leading-relaxed: 1.625;
+  --ep-leading-loose:   1.75;
+
+  /* Font weights */
+  --ep-font-weight-regular:   400;
+  --ep-font-weight-medium:    500;
+  --ep-font-weight-semibold:  600;
+  --ep-font-weight-bold:      700;
+
+  /* Letter spacing */
+  --ep-tracking-tighter: -0.04em;
+  --ep-tracking-tight:   -0.02em;
+  --ep-tracking-normal:  0em;
+  --ep-tracking-wide:    0.02em;
+  --ep-tracking-wider:   0.05em;
+  --ep-tracking-widest:  0.1em;
+
+
+  /* ─── SPACING ─────────────────────────────────────────────────────────── */
+
+  /* 4px base unit */
+  --ep-space-0:   0;
+  --ep-space-px:  1px;
+  --ep-space-0-5: 0.125rem;   /* 2px */
+  --ep-space-1:   0.25rem;    /* 4px */
+  --ep-space-1-5: 0.375rem;   /* 6px */
+  --ep-space-2:   0.5rem;     /* 8px */
+  --ep-space-2-5: 0.625rem;   /* 10px */
+  --ep-space-3:   0.75rem;    /* 12px */
+  --ep-space-4:   1rem;       /* 16px */
+  --ep-space-5:   1.25rem;    /* 20px */
+  --ep-space-6:   1.5rem;     /* 24px */
+  --ep-space-7:   1.75rem;    /* 28px */
+  --ep-space-8:   2rem;       /* 32px */
+  --ep-space-10:  2.5rem;     /* 40px */
+  --ep-space-12:  3rem;       /* 48px */
+  --ep-space-16:  4rem;       /* 64px */
+  --ep-space-20:  5rem;       /* 80px */
+  --ep-space-24:  6rem;       /* 96px */
+  --ep-space-32:  8rem;       /* 128px */
+
+
+  /* ─── BORDER RADIUS ───────────────────────────────────────────────────── */
+
+  --ep-radius-none:   0;
+  --ep-radius-sm:     0.25rem;   /* 4px — inputs, small badges */
+  --ep-radius-md:     0.5rem;    /* 8px — default */
+  --ep-radius-lg:     0.75rem;   /* 12px — cards */
+  --ep-radius-xl:     1rem;      /* 16px — large panels */
+  --ep-radius-2xl:    1.5rem;    /* 24px — modals */
+  --ep-radius-full:   9999px;    /* pills */
+
+
+  /* ─── BORDERS ─────────────────────────────────────────────────────────── */
+
+  --ep-border-width-thin:   1px;
+  --ep-border-width-normal: 1.5px;
+  --ep-border-width-thick:  2px;
+
+  /* Shorthand border values */
+  --ep-border-default:  var(--ep-border-width-thin) solid var(--ep-color-border);
+  --ep-border-strong:   var(--ep-border-width-thin) solid var(--ep-color-border-strong);
+  --ep-border-subtle:   var(--ep-border-width-thin) solid var(--ep-color-border-subtle);
+  --ep-border-brand:    var(--ep-border-width-thin) solid var(--ep-color-border-brand);
+  --ep-border-focus:    var(--ep-border-width-thick) solid var(--ep-color-border-focus);
+
+
+  /* ─── SHADOWS ─────────────────────────────────────────────────────────── */
+
+  /* Warm-tinted shadows (avoid pure gray/black drop shadows) */
+  --ep-shadow-color:    42deg 20% 40%;
+
+  --ep-shadow-none:   none;
+
+  /* Very subtle lift — tables, flush sections */
+  --ep-shadow-xs:
+    0 1px 2px hsl(var(--ep-shadow-color) / 0.04);
+
+  /* Default card/panel */
+  --ep-shadow-sm:
+    0 1px 2px hsl(var(--ep-shadow-color) / 0.04),
+    0 2px 6px hsl(var(--ep-shadow-color) / 0.06);
+
+  /* Raised panels, dropdowns */
+  --ep-shadow-md:
+    0 2px 4px hsl(var(--ep-shadow-color) / 0.04),
+    0 4px 12px hsl(var(--ep-shadow-color) / 0.08);
+
+  /* Modals, toasts */
+  --ep-shadow-lg:
+    0 4px 8px hsl(var(--ep-shadow-color) / 0.04),
+    0 8px 24px hsl(var(--ep-shadow-color) / 0.10),
+    0 16px 40px hsl(var(--ep-shadow-color) / 0.06);
+
+  /* Focus ring (not glow — clean offset) */
+  --ep-shadow-focus:
+    0 0 0 3px hsl(var(--ep-shadow-color) / 0.06),
+    0 0 0 2px var(--ep-color-border-focus);
+
+
+  /* ─── MOTION ──────────────────────────────────────────────────────────── */
+
+  --ep-duration-instant: 50ms;
+  --ep-duration-fast:    120ms;
+  --ep-duration-normal:  200ms;
+  --ep-duration-slow:    350ms;
+  --ep-duration-lazy:    500ms;
+
+  --ep-ease-default:   cubic-bezier(0.16, 1, 0.3, 1);   /* spring-ish */
+  --ep-ease-in:        cubic-bezier(0.4, 0, 1, 1);
+  --ep-ease-out:       cubic-bezier(0, 0, 0.2, 1);
+  --ep-ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ep-ease-bounce:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+
+  /* ─── Z-INDEX ─────────────────────────────────────────────────────────── */
+
+  --ep-z-below:   -1;
+  --ep-z-base:     0;
+  --ep-z-raised:   10;
+  --ep-z-dropdown: 100;
+  --ep-z-sticky:   200;
+  --ep-z-overlay:  300;
+  --ep-z-modal:    400;
+  --ep-z-toast:    500;
+  --ep-z-top:      600;
+
+
+  /* ─── LAYOUT ──────────────────────────────────────────────────────────── */
+
+  --ep-content-xs:  20rem;   /* 320px */
+  --ep-content-sm:  36rem;   /* 576px */
+  --ep-content-md:  48rem;   /* 768px */
+  --ep-content-lg:  64rem;   /* 1024px */
+  --ep-content-xl:  80rem;   /* 1280px */
+  --ep-content-2xl: 90rem;   /* 1440px */
+
+  --ep-gutter: var(--ep-space-6);   /* page horizontal padding */
+}
+
+/* Reduced-motion: register property so component-level rules can use it */
+@property --ep-animation-reduced {
+  syntax: "*";
+  inherits: false;
+  initial-value: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ep-duration-fast:   0ms;
+    --ep-duration-normal: 0ms;
+    --ep-duration-slow:   0ms;
+    --ep-duration-lazy:   0ms;
+  }
+}

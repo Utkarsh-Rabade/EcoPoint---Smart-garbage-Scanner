@@ -1,0 +1,218 @@
+/*
+ * EcoPoints — Input, Textarea, Select component styles
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Design principles:
+ *   - Thin 1px border on warm neutral
+ *   - Clean focus ring (no glow, just offset outline)
+ *   - Error/success states use semantic tokens
+ *   - No heavy shadows or rounded edges that feel "app-y"
+ */
+
+/* ── Base field shell ────────────────────────────────────────────────────── */
+
+.ep-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ep-space-1-5);
+  width: 100%;
+}
+
+/* ── Label ───────────────────────────────────────────────────────────────── */
+
+.ep-label {
+  display: block;
+  font-size: var(--ep-font-size-sm);
+  font-weight: var(--ep-font-weight-medium);
+  color: var(--ep-color-text-primary);
+  letter-spacing: var(--ep-tracking-normal);
+  line-height: var(--ep-leading-normal);
+}
+
+.ep-label--required::after {
+  content: " *";
+  color: var(--ep-color-error);
+  font-size: var(--ep-font-size-sm);
+}
+
+/* ── Input / Textarea / Select — shared base ─────────────────────────────── */
+
+.ep-input,
+.ep-textarea,
+.ep-select {
+  width: 100%;
+  font-family: var(--ep-font-sans);
+  font-size: var(--ep-font-size-md);
+  font-weight: var(--ep-font-weight-regular);
+  line-height: var(--ep-leading-normal);
+  color: var(--ep-color-text-primary);
+  background-color: var(--ep-color-surface);
+
+  padding: var(--ep-space-2-5) var(--ep-space-3);
+  border: var(--ep-border-width-thin) solid var(--ep-color-border-strong);
+  border-radius: var(--ep-radius-md);
+
+  transition:
+    border-color var(--ep-duration-fast) var(--ep-ease-out),
+    box-shadow   var(--ep-duration-fast) var(--ep-ease-out);
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.ep-input::placeholder,
+.ep-textarea::placeholder {
+  color: var(--ep-color-text-disabled);
+}
+
+/* Focus */
+.ep-input:focus,
+.ep-textarea:focus,
+.ep-select:focus {
+  outline: none;
+  border-color: var(--ep-color-border-focus);
+  box-shadow: 0 0 0 3px hsl(136deg 28% 35% / 0.12);
+}
+
+/* Hover (not focused, not disabled) */
+.ep-input:hover:not(:focus):not(:disabled),
+.ep-textarea:hover:not(:focus):not(:disabled),
+.ep-select:hover:not(:focus):not(:disabled) {
+  border-color: var(--ep-palette-neutral-400);
+}
+
+/* Disabled */
+.ep-input:disabled,
+.ep-textarea:disabled,
+.ep-select:disabled {
+  background-color: var(--ep-color-bg-muted);
+  color: var(--ep-color-text-disabled);
+  cursor: not-allowed;
+  border-color: var(--ep-color-border);
+}
+
+/* ── Error state ─────────────────────────────────────────────────────────── */
+
+.ep-input--error,
+.ep-textarea--error,
+.ep-select--error {
+  border-color: var(--ep-color-error-border);
+  background-color: var(--ep-color-error-subtle);
+}
+
+.ep-input--error:focus,
+.ep-textarea--error:focus,
+.ep-select--error:focus {
+  border-color: var(--ep-color-error);
+  box-shadow: 0 0 0 3px hsl(0deg 63% 43% / 0.12);
+}
+
+/* ── Success state ───────────────────────────────────────────────────────── */
+
+.ep-input--success,
+.ep-textarea--success,
+.ep-select--success {
+  border-color: var(--ep-color-success-border);
+}
+
+.ep-input--success:focus,
+.ep-textarea--success:focus,
+.ep-select--success:focus {
+  border-color: var(--ep-color-success);
+  box-shadow: 0 0 0 3px hsl(136deg 28% 35% / 0.12);
+}
+
+/* ── Textarea ───────────────────────────────────────────────────────────── */
+
+.ep-textarea {
+  min-height: 5rem;
+  resize: vertical;
+  line-height: var(--ep-leading-relaxed);
+}
+
+/* ── Select — with custom chevron ───────────────────────────────────────── */
+
+.ep-select {
+  padding-right: var(--ep-space-8);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%23857d74' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--ep-space-3) center;
+  cursor: pointer;
+}
+
+/* ── Helper / error text ─────────────────────────────────────────────────── */
+
+.ep-field-hint {
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-text-tertiary);
+  line-height: var(--ep-leading-snug);
+}
+
+.ep-field-error {
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-error-text);
+  line-height: var(--ep-leading-snug);
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-1);
+}
+
+/* ── Input with left icon / prefix ─────────────────────────────────────── */
+
+.ep-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ep-input-wrapper .ep-input {
+  padding-left: var(--ep-space-8);
+}
+
+.ep-input-wrapper .ep-input--prefix-lg {
+  padding-left: var(--ep-space-10);
+}
+
+.ep-input-icon {
+  position: absolute;
+  left: var(--ep-space-3);
+  color: var(--ep-color-text-tertiary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.ep-input-suffix {
+  position: absolute;
+  right: var(--ep-space-3);
+  color: var(--ep-color-text-tertiary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Checkbox / Radio ────────────────────────────────────────────────────── */
+
+.ep-checkbox,
+.ep-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ep-space-2-5);
+  cursor: pointer;
+}
+
+.ep-checkbox input[type="checkbox"],
+.ep-radio input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.15em;
+  flex-shrink: 0;
+  accent-color: var(--ep-color-brand);
+  cursor: pointer;
+}
+
+.ep-checkbox__label,
+.ep-radio__label {
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-secondary);
+  line-height: var(--ep-leading-snug);
+}

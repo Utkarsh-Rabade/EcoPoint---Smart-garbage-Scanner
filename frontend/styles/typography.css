@@ -1,0 +1,168 @@
+/*
+ * EcoPoints — Section heading / typography component styles
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Headings are the most important layout-level typographic decision.
+ * We provide named semantic heading classes instead of relying on raw h1-h6
+ * so that visual size and semantic level are decoupled.
+ *
+ * Patterns:
+ *   .ep-heading-page    — top-level page title (only one per page)
+ *   .ep-heading-section — major section within a page
+ *   .ep-heading-sub     — subsection heading
+ *   .ep-heading-label   — small all-caps section label (non-semantic, decorative)
+ *   .ep-heading-eyebrow — tiny pre-label above a title
+ *   .ep-prose           — long-form prose block
+ *
+ * All avoid gradients and color effects. No glow, no fill, no shadow.
+ */
+
+/* ── Page heading ─────────────────────────────────────────────────────────── */
+
+.ep-heading-page {
+  font-size: var(--ep-font-size-4xl);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tighter);
+  line-height: var(--ep-leading-tight);
+  color: var(--ep-color-text-primary);
+}
+
+@media (max-width: 640px) {
+  .ep-heading-page {
+    font-size: var(--ep-font-size-3xl);
+  }
+}
+
+/* ── Section heading ──────────────────────────────────────────────────────── */
+
+.ep-heading-section {
+  font-size: var(--ep-font-size-2xl);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tight);
+  line-height: var(--ep-leading-snug);
+  color: var(--ep-color-text-primary);
+}
+
+/* Section heading with a ruled underline treatment */
+.ep-heading-section--ruled {
+  padding-bottom: var(--ep-space-4);
+  border-bottom: var(--ep-border-default);
+  margin-bottom: var(--ep-space-6);
+}
+
+/* Section heading with a left accent bar */
+.ep-heading-section--accented {
+  padding-left: var(--ep-space-4);
+  border-left: var(--ep-border-width-thick) solid var(--ep-color-brand);
+}
+
+/* ── Sub heading ──────────────────────────────────────────────────────────── */
+
+.ep-heading-sub {
+  font-size: var(--ep-font-size-lg);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tight);
+  line-height: var(--ep-leading-snug);
+  color: var(--ep-color-text-primary);
+}
+
+/* ── Eyebrow — tiny pre-label above heading ───────────────────────────────── */
+
+.ep-eyebrow {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-widest);
+  text-transform: uppercase;
+  color: var(--ep-color-text-tertiary);
+  line-height: var(--ep-leading-none);
+}
+
+.ep-eyebrow--brand {
+  color: var(--ep-color-brand);
+}
+
+.ep-eyebrow--earth {
+  color: var(--ep-color-earth);
+}
+
+/* ── Label heading — for section tabs / nav labels ────────────────────────── */
+
+.ep-heading-label {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-widest);
+  text-transform: uppercase;
+  color: var(--ep-color-text-tertiary);
+}
+
+/* ── Inline text utilities ────────────────────────────────────────────────── */
+
+.ep-text-lead {
+  font-size: var(--ep-font-size-lg);
+  color: var(--ep-color-text-secondary);
+  line-height: var(--ep-leading-relaxed);
+  font-weight: var(--ep-font-weight-regular);
+}
+
+.ep-text-body {
+  font-size: var(--ep-font-size-md);
+  color: var(--ep-color-text-secondary);
+  line-height: var(--ep-leading-relaxed);
+}
+
+.ep-text-caption {
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-text-tertiary);
+  line-height: var(--ep-leading-snug);
+}
+
+.ep-text-mono {
+  font-family: var(--ep-font-mono);
+  font-size: 0.9em;
+  color: var(--ep-color-text-secondary);
+}
+
+.ep-text-brand  { color: var(--ep-color-brand); }
+.ep-text-earth  { color: var(--ep-color-earth); }
+.ep-text-points { color: var(--ep-color-points); }
+.ep-text-muted  { color: var(--ep-color-text-tertiary); }
+.ep-text-error  { color: var(--ep-color-error-text); }
+.ep-text-success { color: var(--ep-color-success-text); }
+
+/* ── Prose block ──────────────────────────────────────────────────────────── */
+
+.ep-prose {
+  max-width: 65ch;
+  font-size: var(--ep-font-size-md);
+  color: var(--ep-color-text-secondary);
+  line-height: var(--ep-leading-relaxed);
+}
+
+.ep-prose p + p {
+  margin-top: var(--ep-space-4);
+}
+
+.ep-prose a {
+  color: var(--ep-color-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--ep-color-brand-border);
+  transition: text-decoration-color var(--ep-duration-fast) var(--ep-ease-out);
+}
+
+.ep-prose a:hover {
+  text-decoration-color: var(--ep-color-brand);
+}
+
+/* ── Page header block — title + lead together ────────────────────────────── */
+
+.ep-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ep-space-2);
+  padding-bottom: var(--ep-space-8);
+}
+
+.ep-page-header--bordered {
+  border-bottom: var(--ep-border-default);
+  margin-bottom: var(--ep-space-8);
+}

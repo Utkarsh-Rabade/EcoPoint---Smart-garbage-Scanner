@@ -1,0 +1,284 @@
+/*
+ * EcoPoints — Status indicator styles
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Status indicators for submission states, verification results, etc.
+ *
+ *   .ep-status-pill      — inline pill with icon + label
+ *   .ep-status-banner    — full-width informational bar
+ *   .ep-alert            — dismissible alert block
+ *   .ep-toast            — (CSS-only shape; JS handles show/hide)
+ *   .ep-callout          — inline note / tip block (not dismissible)
+ */
+
+/* ─── Status pill ─────────────────────────────────────────────────────────── */
+
+.ep-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ep-space-1-5);
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-medium);
+  padding: var(--ep-space-1) var(--ep-space-2-5);
+  border-radius: var(--ep-radius-full);
+  border: var(--ep-border-width-thin) solid transparent;
+  white-space: nowrap;
+}
+
+.ep-status-pill--pending {
+  background-color: var(--ep-color-warning-muted);
+  border-color: var(--ep-color-warning-border);
+  color: var(--ep-color-warning-text);
+}
+
+.ep-status-pill--approved,
+.ep-status-pill--verified {
+  background-color: var(--ep-color-success-muted);
+  border-color: var(--ep-color-success-border);
+  color: var(--ep-color-success-text);
+}
+
+.ep-status-pill--rejected,
+.ep-status-pill--failed {
+  background-color: var(--ep-color-error-muted);
+  border-color: var(--ep-color-error-border);
+  color: var(--ep-color-error-text);
+}
+
+.ep-status-pill--reviewing {
+  background-color: var(--ep-color-info-muted);
+  border-color: var(--ep-color-info-border);
+  color: var(--ep-color-info-text);
+}
+
+.ep-status-pill--draft {
+  background-color: var(--ep-color-bg-muted);
+  border-color: var(--ep-color-border);
+  color: var(--ep-color-text-tertiary);
+}
+
+/* ─── Banner — full-width strip ───────────────────────────────────────────── */
+
+.ep-banner {
+  width: 100%;
+  padding: var(--ep-space-3) var(--ep-space-5);
+  font-size: var(--ep-font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-3);
+  border-bottom: var(--ep-border-default);
+}
+
+.ep-banner--info {
+  background-color: var(--ep-color-info-subtle);
+  color: var(--ep-color-info-text);
+}
+
+.ep-banner--warning {
+  background-color: var(--ep-color-warning-subtle);
+  color: var(--ep-color-warning-text);
+}
+
+.ep-banner--success {
+  background-color: var(--ep-color-success-subtle);
+  color: var(--ep-color-success-text);
+}
+
+.ep-banner--error {
+  background-color: var(--ep-color-error-subtle);
+  color: var(--ep-color-error-text);
+}
+
+/* ─── Alert — block, optionally dismissible ───────────────────────────────── */
+
+.ep-alert {
+  display: flex;
+  gap: var(--ep-space-3);
+  padding: var(--ep-space-4) var(--ep-space-5);
+  border-radius: var(--ep-radius-md);
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-top: var(--ep-border-subtle);
+  border-right: var(--ep-border-subtle);
+  border-bottom: var(--ep-border-subtle);
+  font-size: var(--ep-font-size-sm);
+  line-height: var(--ep-leading-relaxed);
+}
+
+.ep-alert__icon {
+  flex-shrink: 0;
+  margin-top: 0.1em;
+}
+
+.ep-alert__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ep-alert__title {
+  font-weight: var(--ep-font-weight-semibold);
+  margin-bottom: var(--ep-space-0-5);
+}
+
+.ep-alert__dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  padding: 0;
+  line-height: 1;
+  align-self: flex-start;
+  margin-top: 0.1em;
+}
+
+.ep-alert__dismiss:hover { opacity: 1; }
+
+.ep-alert--info {
+  background-color: var(--ep-color-info-subtle);
+  border-left-color: var(--ep-color-info);
+  color: var(--ep-color-info-text);
+}
+
+.ep-alert--warning {
+  background-color: var(--ep-color-warning-subtle);
+  border-left-color: var(--ep-color-warning);
+  color: var(--ep-color-warning-text);
+}
+
+.ep-alert--success {
+  background-color: var(--ep-color-success-subtle);
+  border-left-color: var(--ep-color-success);
+  color: var(--ep-color-success-text);
+}
+
+.ep-alert--error {
+  background-color: var(--ep-color-error-subtle);
+  border-left-color: var(--ep-color-error);
+  color: var(--ep-color-error-text);
+}
+
+/* ─── Callout — inline tip (not dismissible) ─────────────────────────────── */
+
+.ep-callout {
+  padding: var(--ep-space-4);
+  border-radius: var(--ep-radius-md);
+  border: var(--ep-border-default);
+  background-color: var(--ep-color-bg-subtle);
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-secondary);
+  line-height: var(--ep-leading-relaxed);
+}
+
+.ep-callout--brand {
+  background-color: var(--ep-color-brand-subtle);
+  border-color: var(--ep-color-brand-border);
+  color: var(--ep-color-brand-text);
+}
+
+.ep-callout--earth {
+  background-color: var(--ep-color-earth-subtle);
+  border-color: var(--ep-color-earth-border);
+  color: var(--ep-color-earth-text);
+}
+
+/* ─── Toast shape (JS shows/hides) ───────────────────────────────────────── */
+
+.ep-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ep-space-3);
+  padding: var(--ep-space-4) var(--ep-space-5);
+  border-radius: var(--ep-radius-md);
+  background-color: var(--ep-color-surface);
+  border: var(--ep-border-default);
+  box-shadow: var(--ep-shadow-lg);
+  font-size: var(--ep-font-size-sm);
+  max-width: 24rem;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.ep-toast__icon { flex-shrink: 0; margin-top: 0.1em; }
+
+.ep-toast__body { flex: 1; min-width: 0; }
+
+.ep-toast__title {
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+}
+
+.ep-toast__description {
+  color: var(--ep-color-text-tertiary);
+  margin-top: var(--ep-space-0-5);
+  line-height: var(--ep-leading-snug);
+}
+
+.ep-toast__dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ep-color-text-tertiary);
+  padding: 0;
+  line-height: 1;
+}
+
+.ep-toast__dismiss:hover { color: var(--ep-color-text-primary); }
+
+/* Toast region (fixed container) */
+.ep-toast-region {
+  position: fixed;
+  bottom: var(--ep-space-6);
+  right: var(--ep-space-6);
+  z-index: var(--ep-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ep-space-3);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .ep-toast-region {
+    left: var(--ep-space-4);
+    right: var(--ep-space-4);
+    bottom: var(--ep-space-4);
+  }
+}
+
+/* ─── Verification result block ───────────────────────────────────────────── */
+
+/* Used on submission result screens */
+.ep-verification-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--ep-space-3);
+  padding: var(--ep-space-8);
+}
+
+.ep-verification-result__icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ep-verification-result--success .ep-verification-result__icon {
+  background-color: var(--ep-color-success-muted);
+  color: var(--ep-color-success);
+}
+
+.ep-verification-result--error .ep-verification-result__icon {
+  background-color: var(--ep-color-error-muted);
+  color: var(--ep-color-error);
+}
+
+.ep-verification-result--pending .ep-verification-result__icon {
+  background-color: var(--ep-color-warning-muted);
+  color: var(--ep-color-warning);
+}

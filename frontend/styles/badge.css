@@ -1,0 +1,148 @@
+/*
+ * EcoPoints — Badge component styles
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Badges are small, informational labels.
+ *
+ * Variants:  default | brand | success | warning | error | info | points | earth
+ * Styles:    solid | subtle (default) | outline
+ * Sizes:     sm | md (default)
+ *
+ * Design: restrained, no heavy pills everywhere.
+ * Use badges surgically — not on every piece of text.
+ */
+
+.ep-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ep-space-1);
+
+  font-family: var(--ep-font-sans);
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-medium);
+  line-height: var(--ep-leading-none);
+  letter-spacing: var(--ep-tracking-wide);
+  white-space: nowrap;
+
+  padding: var(--ep-space-0-5) var(--ep-space-2);
+  border-radius: var(--ep-radius-sm);
+  border: var(--ep-border-width-thin) solid transparent;
+}
+
+/* ── Sizes ──────────────────────────────────────────────────────────────── */
+
+.ep-badge--sm {
+  font-size: var(--ep-font-size-2xs);
+  padding: 0.1rem var(--ep-space-1-5);
+}
+
+/* ── Subtle variants (default style) ────────────────────────────────────── */
+
+.ep-badge--default {
+  background-color: var(--ep-color-bg-muted);
+  border-color: var(--ep-color-border);
+  color: var(--ep-color-text-secondary);
+}
+
+.ep-badge--brand {
+  background-color: var(--ep-color-brand-muted);
+  border-color: var(--ep-color-brand-border);
+  color: var(--ep-color-brand-text);
+}
+
+.ep-badge--success {
+  background-color: var(--ep-color-success-muted);
+  border-color: var(--ep-color-success-border);
+  color: var(--ep-color-success-text);
+}
+
+.ep-badge--warning {
+  background-color: var(--ep-color-warning-muted);
+  border-color: var(--ep-color-warning-border);
+  color: var(--ep-color-warning-text);
+}
+
+.ep-badge--error {
+  background-color: var(--ep-color-error-muted);
+  border-color: var(--ep-color-error-border);
+  color: var(--ep-color-error-text);
+}
+
+.ep-badge--info {
+  background-color: var(--ep-color-info-muted);
+  border-color: var(--ep-color-info-border);
+  color: var(--ep-color-info-text);
+}
+
+.ep-badge--earth {
+  background-color: var(--ep-color-earth-muted);
+  border-color: var(--ep-color-earth-border);
+  color: var(--ep-color-earth-text);
+}
+
+.ep-badge--points {
+  background-color: var(--ep-color-points-muted);
+  border-color: var(--ep-color-points-border);
+  color: var(--ep-color-points-text);
+}
+
+/* ── Solid variants ──────────────────────────────────────────────────────── */
+
+.ep-badge--solid.ep-badge--brand {
+  background-color: var(--ep-color-brand);
+  border-color: var(--ep-color-brand);
+  color: var(--ep-color-brand-text-on);
+}
+
+.ep-badge--solid.ep-badge--success {
+  background-color: var(--ep-color-success);
+  border-color: var(--ep-color-success);
+  color: #fefcfa;
+}
+
+.ep-badge--solid.ep-badge--warning {
+  background-color: var(--ep-color-warning);
+  border-color: var(--ep-color-warning);
+  color: #ffffff;
+}
+
+.ep-badge--solid.ep-badge--error {
+  background-color: var(--ep-color-error);
+  border-color: var(--ep-color-error);
+  color: #ffffff;
+}
+
+/* ── Dot indicator (standalone status dot) ──────────────────────────────── */
+
+.ep-status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ep-status-dot--success { background-color: var(--ep-color-success); }
+.ep-status-dot--warning { background-color: var(--ep-color-warning); }
+.ep-status-dot--error   { background-color: var(--ep-color-error); }
+.ep-status-dot--neutral { background-color: var(--ep-palette-neutral-400); }
+.ep-status-dot--brand   { background-color: var(--ep-color-brand); }
+
+/* Pulsing dot — for live/active states */
+.ep-status-dot--pulse {
+  position: relative;
+}
+
+.ep-status-dot--pulse::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0;
+  animation: ep-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ep-pulse {
+  0%   { opacity: 0.4; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.8); }
+}

@@ -1,0 +1,194 @@
+/*
+ * EcoPoints — Button component styles
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Variants:  primary | secondary | ghost | danger | outline
+ * Sizes:     sm | md (default) | lg
+ * States:    default | hover | active | focus | disabled | loading
+ *
+ * Each variant uses a deliberately different visual treatment:
+ *   primary   — solid forest green fill, strong presence
+ *   secondary — warm off-white fill with border, approachable
+ *   ghost     — no fill, no border, text-only
+ *   danger    — red for destructive actions
+ *   outline   — thin border, transparent fill
+ */
+
+.ep-btn {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ep-space-2);
+
+  /* Typography */
+  font-family: var(--ep-font-sans);
+  font-size: var(--ep-font-size-sm);
+  font-weight: var(--ep-font-weight-medium);
+  line-height: var(--ep-leading-none);
+  letter-spacing: var(--ep-tracking-wide);
+  white-space: nowrap;
+
+  /* Box */
+  padding: var(--ep-space-2-5) var(--ep-space-4);
+  border-radius: var(--ep-radius-md);
+  border: var(--ep-border-width-thin) solid transparent;
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+
+  /* Transition */
+  transition:
+    background-color var(--ep-duration-fast) var(--ep-ease-out),
+    border-color     var(--ep-duration-fast) var(--ep-ease-out),
+    color            var(--ep-duration-fast) var(--ep-ease-out),
+    box-shadow       var(--ep-duration-fast) var(--ep-ease-out),
+    opacity          var(--ep-duration-fast) var(--ep-ease-out);
+}
+
+/* ── Sizes ─────────────────────────────────────────────────────────────── */
+
+.ep-btn--sm {
+  font-size: var(--ep-font-size-xs);
+  padding: var(--ep-space-1-5) var(--ep-space-3);
+  border-radius: var(--ep-radius-sm);
+  gap: var(--ep-space-1-5);
+}
+
+.ep-btn--md {
+  /* default — defined above */
+}
+
+.ep-btn--lg {
+  font-size: var(--ep-font-size-md);
+  padding: var(--ep-space-3) var(--ep-space-6);
+  border-radius: var(--ep-radius-md);
+  gap: var(--ep-space-2-5);
+}
+
+/* ── Variants ───────────────────────────────────────────────────────────── */
+
+/* Primary — forest green */
+.ep-btn--primary {
+  background-color: var(--ep-color-brand);
+  border-color: var(--ep-color-brand);
+  color: var(--ep-color-brand-text-on);
+}
+
+.ep-btn--primary:hover:not(:disabled) {
+  background-color: var(--ep-color-brand-hover);
+  border-color: var(--ep-color-brand-hover);
+}
+
+.ep-btn--primary:active:not(:disabled) {
+  background-color: var(--ep-color-brand-active);
+  border-color: var(--ep-color-brand-active);
+}
+
+/* Secondary — off-white with border */
+.ep-btn--secondary {
+  background-color: var(--ep-color-surface);
+  border-color: var(--ep-color-border-strong);
+  color: var(--ep-color-text-primary);
+  box-shadow: var(--ep-shadow-xs);
+}
+
+.ep-btn--secondary:hover:not(:disabled) {
+  background-color: var(--ep-color-bg-subtle);
+  border-color: var(--ep-color-border-strong);
+}
+
+.ep-btn--secondary:active:not(:disabled) {
+  background-color: var(--ep-color-bg-muted);
+}
+
+/* Ghost — completely transparent */
+.ep-btn--ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--ep-color-text-secondary);
+}
+
+.ep-btn--ghost:hover:not(:disabled) {
+  background-color: var(--ep-color-bg-muted);
+  color: var(--ep-color-text-primary);
+}
+
+.ep-btn--ghost:active:not(:disabled) {
+  background-color: var(--ep-color-bg-inset);
+}
+
+/* Outline — thin border, no fill */
+.ep-btn--outline {
+  background-color: transparent;
+  border-color: var(--ep-color-border-brand);
+  color: var(--ep-color-brand);
+}
+
+.ep-btn--outline:hover:not(:disabled) {
+  background-color: var(--ep-color-brand-subtle);
+}
+
+.ep-btn--outline:active:not(:disabled) {
+  background-color: var(--ep-color-brand-muted);
+}
+
+/* Danger — restrained red */
+.ep-btn--danger {
+  background-color: var(--ep-color-error);
+  border-color: var(--ep-color-error);
+  color: #ffffff;
+}
+
+.ep-btn--danger:hover:not(:disabled) {
+  background-color: #991b1b;
+  border-color: #991b1b;
+}
+
+/* ── States ─────────────────────────────────────────────────────────────── */
+
+.ep-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ep-shadow-focus);
+}
+
+.ep-btn:disabled,
+.ep-btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Loading state — spinner shown via .ep-btn__spinner */
+.ep-btn--loading {
+  cursor: wait;
+  pointer-events: none;
+}
+
+.ep-btn__spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ep-spin var(--ep-duration-slow) linear infinite;
+  flex-shrink: 0;
+}
+
+/* Icon-only button */
+.ep-btn--icon {
+  padding: var(--ep-space-2);
+  aspect-ratio: 1;
+}
+
+.ep-btn--icon.ep-btn--sm { padding: var(--ep-space-1-5); }
+.ep-btn--icon.ep-btn--lg { padding: var(--ep-space-3); }
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+
+@keyframes ep-spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,243 @@
+/*
+ * EcoPoints — Card / Panel component styles
+ * ─────────────────────────────────────────────────────────────────────────────
+ * IMPORTANT: Not every section gets a card treatment.
+ * We offer multiple panel treatments so the UI doesn't look uniform:
+ *
+ *   .ep-card          — white surface, thin border, subtle shadow (default)
+ *   .ep-panel         — flat, no shadow, borderless. For inset sections.
+ *   .ep-well          — sunken, off-white fill. For depressed / inset content.
+ *   .ep-section       — full-bleed section block (no card chrome at all)
+ *   .ep-stat-block    — numeric + label pair, no card chrome
+ *
+ * Sizes:
+ *   No size variants — use padding utilities or inner padding modifiers.
+ *
+ * Design: thin 1px border, restrained shadow, medium radius.
+ * No hover lift, no 3D, no glow.
+ */
+
+/* ── Card — white surface ────────────────────────────────────────────────── */
+
+.ep-card {
+  background-color: var(--ep-color-surface);
+  border: var(--ep-border-default);
+  border-radius: var(--ep-radius-lg);
+  box-shadow: var(--ep-shadow-sm);
+  padding: var(--ep-space-6);
+}
+
+.ep-card--compact {
+  padding: var(--ep-space-4);
+}
+
+.ep-card--loose {
+  padding: var(--ep-space-8);
+}
+
+/* Card header row — label + optional action */
+.ep-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ep-space-4);
+  margin-bottom: var(--ep-space-5);
+}
+
+.ep-card__title {
+  font-size: var(--ep-font-size-md);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+  line-height: var(--ep-leading-tight);
+}
+
+.ep-card__subtitle {
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-tertiary);
+  margin-top: var(--ep-space-0-5);
+  line-height: var(--ep-leading-snug);
+}
+
+/* Horizontal divider inside a card */
+.ep-card__divider {
+  border: none;
+  border-top: var(--ep-border-subtle);
+  margin-block: var(--ep-space-5);
+}
+
+/* Card footer */
+.ep-card__footer {
+  margin-top: var(--ep-space-5);
+  padding-top: var(--ep-space-4);
+  border-top: var(--ep-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ep-space-3);
+}
+
+/* ── Panel — flat, borderless ────────────────────────────────────────────── */
+
+.ep-panel {
+  padding: var(--ep-space-6);
+}
+
+/* ── Well — sunken / inset ────────────────────────────────────────────────── */
+
+.ep-well {
+  background-color: var(--ep-color-bg-subtle);
+  border: var(--ep-border-subtle);
+  border-radius: var(--ep-radius-md);
+  padding: var(--ep-space-5);
+}
+
+.ep-well--compact {
+  padding: var(--ep-space-3) var(--ep-space-4);
+}
+
+/* ── Section — full-bleed wrapper, no chrome ─────────────────────────────── */
+
+.ep-section {
+  padding-block: var(--ep-space-12);
+}
+
+.ep-section--sm {
+  padding-block: var(--ep-space-8);
+}
+
+.ep-section--lg {
+  padding-block: var(--ep-space-20);
+}
+
+/* Dividing rule between sections */
+.ep-section + .ep-section {
+  border-top: var(--ep-border-subtle);
+}
+
+/* ── List item row — used in cards for data rows ─────────────────────────── */
+
+.ep-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ep-space-4);
+  padding-block: var(--ep-space-3);
+  border-bottom: var(--ep-border-subtle);
+}
+
+.ep-list-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ep-list-row:first-child {
+  padding-top: 0;
+}
+
+.ep-list-row__label {
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-secondary);
+  flex-shrink: 0;
+}
+
+.ep-list-row__value {
+  font-size: var(--ep-font-size-sm);
+  font-weight: var(--ep-font-weight-medium);
+  color: var(--ep-color-text-primary);
+  text-align: right;
+}
+
+/* ── Stat block — number + label, no card chrome ─────────────────────────── */
+
+.ep-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ep-space-1);
+}
+
+.ep-stat__value {
+  font-size: var(--ep-font-size-3xl);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+  line-height: var(--ep-leading-none);
+  letter-spacing: var(--ep-tracking-tight);
+}
+
+.ep-stat__value--brand { color: var(--ep-color-brand); }
+.ep-stat__value--earth { color: var(--ep-color-earth); }
+.ep-stat__value--points { color: var(--ep-color-points); }
+
+.ep-stat__label {
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-tertiary);
+  letter-spacing: var(--ep-tracking-wide);
+}
+
+.ep-stat__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ep-space-0-5);
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-medium);
+}
+
+.ep-stat__delta--up   { color: var(--ep-color-success); }
+.ep-stat__delta--down { color: var(--ep-color-error); }
+
+/* ── Table / data row variant ────────────────────────────────────────────── */
+
+.ep-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: var(--ep-border-default);
+  border-radius: var(--ep-radius-lg);
+}
+
+.ep-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ep-font-size-sm);
+}
+
+.ep-table thead {
+  background-color: var(--ep-color-bg-subtle);
+}
+
+.ep-table th {
+  text-align: left;
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-tertiary);
+  letter-spacing: var(--ep-tracking-widest);
+  text-transform: uppercase;
+  padding: var(--ep-space-3) var(--ep-space-4);
+  border-bottom: var(--ep-border-default);
+  white-space: nowrap;
+}
+
+.ep-table td {
+  padding: var(--ep-space-3-5, var(--ep-space-3)) var(--ep-space-4);
+  border-bottom: var(--ep-border-subtle);
+  color: var(--ep-color-text-secondary);
+  vertical-align: middle;
+}
+
+.ep-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ep-table tbody tr:hover {
+  background-color: var(--ep-color-bg-subtle);
+  transition: background-color var(--ep-duration-fast) var(--ep-ease-out);
+}
+
+.ep-table td:first-child,
+.ep-table th:first-child {
+  padding-left: var(--ep-space-6);
+}
+
+.ep-table td:last-child,
+.ep-table th:last-child {
+  padding-right: var(--ep-space-6);
+}
