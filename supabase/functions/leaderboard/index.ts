@@ -64,7 +64,7 @@ const createHandler = async (req: Request): Promise<Response> => {
     // Fetch top 20 users ordered by total_points descending
     const { data: leaderboard, error: leaderboardError } = await supabase
       .from('profiles')
-      .select('id, display_name, total_points, created_at')
+      .select('id, full_name, total_points, created_at')
       .order('total_points', { ascending: false })
       .limit(20)
 

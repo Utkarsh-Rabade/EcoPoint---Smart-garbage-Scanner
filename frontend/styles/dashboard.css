@@ -1,0 +1,715 @@
+/*
+ * EcoPoints — Dashboard page styles
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Seven visually distinct sections — deliberately NOT uniform cards:
+ *
+ *  1. .db-welcome    — large editorial text, no chrome
+ *  2. .db-impact     — mixed stat treatments (large number + label + badge)
+ *  3. .db-recycle    — full-bleed emphasis band, the visual peak of the page
+ *  4. .db-activity   — thin timeline list, no card chrome
+ *  5. .db-journey    — horizontal level/progress strip
+ *  6. .db-community  — compact bordered list, links to leaderboard
+ *  7. .db-rewards    — icon + text row list, links to rewards
+ *
+ * All values reference existing design tokens.
+ * No hardcoded hex values, no gradients, no 3D.
+ */
+
+/* ─── Page wrapper ────────────────────────────────────────────────────────── */
+
+.db-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ep-space-16);
+}
+
+/* ─── Section 1: Welcome ──────────────────────────────────────────────────── */
+
+.db-welcome {
+  padding-top: var(--ep-space-6);
+}
+
+.db-welcome__headline {
+  font-size: var(--ep-font-size-4xl);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tighter);
+  line-height: 1.1;
+  color: var(--ep-color-text-primary);
+  margin-bottom: var(--ep-space-4);
+}
+
+.db-welcome__body {
+  font-size: var(--ep-font-size-lg);
+  color: var(--ep-color-text-secondary);
+  line-height: var(--ep-leading-relaxed);
+  max-width: 44ch;
+  margin-bottom: var(--ep-space-7);
+}
+
+.db-welcome__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-3);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .db-welcome__headline {
+    font-size: var(--ep-font-size-3xl);
+  }
+
+  .db-welcome__actions .ep-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─── Section 2: Impact stats ─────────────────────────────────────────────── */
+
+.db-impact {}
+
+.db-impact__heading {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-widest);
+  text-transform: uppercase;
+  color: var(--ep-color-text-tertiary);
+  margin-bottom: var(--ep-space-6);
+}
+
+/* Four different visual treatments — no uniform cards */
+.db-impact__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: var(--ep-border-default);
+  border-radius: var(--ep-radius-lg);
+  overflow: hidden;
+}
+
+.db-impact__stat {
+  padding: var(--ep-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ep-space-1-5);
+  position: relative;
+}
+
+.db-impact__stat + .db-impact__stat {
+  border-left: var(--ep-border-default);
+}
+
+/* First stat: points — large number, brand color */
+.db-impact__stat--points {
+  background-color: var(--ep-color-surface);
+}
+
+.db-impact__stat--points .db-impact__value {
+  font-size: var(--ep-font-size-4xl);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tighter);
+  color: var(--ep-color-brand);
+  line-height: 1;
+}
+
+/* Second stat: items — plain number, secondary text */
+.db-impact__stat--items {
+  background-color: var(--ep-color-surface);
+}
+
+.db-impact__stat--items .db-impact__value {
+  font-size: var(--ep-font-size-3xl);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tight);
+  color: var(--ep-color-text-primary);
+  line-height: 1;
+}
+
+/* Third stat: waste diverted — earth tone, smaller */
+.db-impact__stat--waste {
+  background-color: var(--ep-color-earth-subtle);
+}
+
+.db-impact__stat--waste .db-impact__value {
+  font-size: var(--ep-font-size-2xl);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-earth-text);
+  line-height: 1;
+}
+
+/* Fourth stat: streak — badge treatment */
+.db-impact__stat--streak {
+  background-color: var(--ep-color-surface);
+}
+
+.db-impact__stat--streak .db-impact__value {
+  font-size: var(--ep-font-size-2xl);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-points-text);
+  line-height: 1;
+}
+
+.db-impact__label {
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-text-tertiary);
+  letter-spacing: var(--ep-tracking-wide);
+  font-weight: var(--ep-font-weight-medium);
+}
+
+.db-impact__sub {
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-text-disabled);
+}
+
+@media (max-width: 768px) {
+  .db-impact__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .db-impact__stat:nth-child(2) {
+    border-left: var(--ep-border-default);
+  }
+
+  .db-impact__stat:nth-child(3) {
+    border-left: none;
+    border-top: var(--ep-border-default);
+  }
+
+  .db-impact__stat:nth-child(4) {
+    border-left: var(--ep-border-default);
+    border-top: var(--ep-border-default);
+  }
+}
+
+@media (max-width: 480px) {
+  .db-impact__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ─── Section 3: Recycle Now ──────────────────────────────────────────────── */
+
+/*
+ * This is the visual centrepiece — forest-green filled band.
+ * Not a card, not a box-shadow panel. A ruled section with strong contrast.
+ */
+.db-recycle {
+  background-color: var(--ep-color-brand);
+  border-radius: var(--ep-radius-xl);
+  padding: var(--ep-space-10) var(--ep-space-10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ep-space-8);
+}
+
+.db-recycle__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-recycle__eyebrow {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-widest);
+  text-transform: uppercase;
+  color: var(--ep-palette-forest-300);
+  margin-bottom: var(--ep-space-3);
+}
+
+.db-recycle__title {
+  font-size: var(--ep-font-size-3xl);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tight);
+  line-height: var(--ep-leading-tight);
+  color: var(--ep-color-brand-text-on);
+  margin-bottom: var(--ep-space-3);
+}
+
+.db-recycle__desc {
+  font-size: var(--ep-font-size-md);
+  color: var(--ep-palette-forest-200);
+  line-height: var(--ep-leading-relaxed);
+  max-width: 42ch;
+}
+
+.db-recycle__action {
+  flex-shrink: 0;
+}
+
+/* The CTA button on the dark bg — use white/inverse styling */
+.db-recycle__btn {
+  background-color: var(--ep-color-brand-text-on) !important;
+  color: var(--ep-color-brand) !important;
+  border-color: transparent !important;
+  font-weight: var(--ep-font-weight-semibold) !important;
+}
+
+.db-recycle__btn:hover {
+  background-color: var(--ep-palette-forest-50) !important;
+}
+
+/* Icon decoration */
+.db-recycle__icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--ep-radius-lg);
+  background-color: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ep-palette-forest-200);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .db-recycle {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--ep-space-7);
+    gap: var(--ep-space-6);
+  }
+
+  .db-recycle__title {
+    font-size: var(--ep-font-size-2xl);
+  }
+
+  .db-recycle__btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .db-recycle__action {
+    width: 100%;
+  }
+}
+
+/* ─── Section 4: Recent Activity (timeline) ───────────────────────────────── */
+
+.db-activity {}
+
+.db-activity__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ep-space-4);
+  margin-bottom: var(--ep-space-6);
+}
+
+.db-activity__title {
+  font-size: var(--ep-font-size-lg);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+  letter-spacing: var(--ep-tracking-tight);
+}
+
+.db-activity__link {
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-brand);
+  text-decoration: none;
+  font-weight: var(--ep-font-weight-medium);
+  white-space: nowrap;
+}
+
+.db-activity__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Timeline list — no card, just rows with left border timeline */
+.db-activity__list {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid var(--ep-color-border-subtle);
+  margin-left: var(--ep-space-2);
+  padding-left: var(--ep-space-5);
+  gap: 0;
+}
+
+.db-activity__item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--ep-space-4) var(--ep-space-6);
+  padding-block: var(--ep-space-4);
+  position: relative;
+}
+
+.db-activity__item + .db-activity__item {
+  border-top: var(--ep-border-subtle);
+}
+
+/* Timeline dot */
+.db-activity__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--ep-space-5) - 4px);
+  top: calc(var(--ep-space-4) + 0.4em);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--ep-color-border);
+  border: 1.5px solid var(--ep-color-surface);
+  outline: 1.5px solid var(--ep-color-border);
+}
+
+.db-activity__item--approved::before  { background-color: var(--ep-color-success); outline-color: var(--ep-color-success-border); }
+.db-activity__item--rejected::before  { background-color: var(--ep-color-error);   outline-color: var(--ep-color-error-border); }
+.db-activity__item--pending::before   { background-color: var(--ep-color-warning); outline-color: var(--ep-color-warning-border); }
+.db-activity__item--processing::before{ background-color: var(--ep-color-info);    outline-color: var(--ep-color-info-border); }
+.db-activity__item--review::before    { background-color: var(--ep-color-warning); outline-color: var(--ep-color-warning-border); }
+
+.db-activity__main {}
+
+.db-activity__item-title {
+  font-size: var(--ep-font-size-sm);
+  font-weight: var(--ep-font-weight-medium);
+  color: var(--ep-color-text-primary);
+  margin-bottom: var(--ep-space-1);
+}
+
+.db-activity__item-meta {
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-2);
+}
+
+.db-activity__item-meta-sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: var(--ep-color-border);
+  flex-shrink: 0;
+}
+
+.db-activity__side {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ep-space-1-5);
+}
+
+.db-activity__points {
+  font-size: var(--ep-font-size-sm);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-points-text);
+  white-space: nowrap;
+}
+
+.db-activity__points--zero {
+  color: var(--ep-color-text-disabled);
+  font-weight: var(--ep-font-weight-regular);
+}
+
+/* ─── Section 5: Eco Journey ──────────────────────────────────────────────── */
+
+.db-journey {
+  border: var(--ep-border-default);
+  border-radius: var(--ep-radius-lg);
+  padding: var(--ep-space-6);
+}
+
+.db-journey__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ep-space-4);
+  margin-bottom: var(--ep-space-6);
+}
+
+.db-journey__title {
+  font-size: var(--ep-font-size-lg);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+  letter-spacing: var(--ep-tracking-tight);
+}
+
+.db-journey__level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ep-space-1-5);
+  padding: var(--ep-space-1) var(--ep-space-2-5);
+  border-radius: var(--ep-radius-sm);
+  background-color: var(--ep-color-brand-subtle);
+  border: var(--ep-border-width-thin) solid var(--ep-color-brand-border);
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-brand);
+  letter-spacing: var(--ep-tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Progress track */
+.db-journey__progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-text-tertiary);
+  margin-bottom: var(--ep-space-2);
+}
+
+.db-journey__track {
+  width: 100%;
+  height: 6px;
+  background-color: var(--ep-color-bg-inset);
+  border-radius: var(--ep-radius-full);
+  overflow: hidden;
+  margin-bottom: var(--ep-space-5);
+}
+
+.db-journey__fill {
+  height: 100%;
+  background-color: var(--ep-color-brand);
+  border-radius: var(--ep-radius-full);
+  transition: width var(--ep-duration-slow) var(--ep-ease-out);
+}
+
+/* Milestone dots row */
+.db-journey__milestones {
+  display: flex;
+  gap: var(--ep-space-3);
+  flex-wrap: wrap;
+}
+
+.db-journey__milestone {
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-1-5);
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-text-tertiary);
+}
+
+.db-journey__milestone-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--ep-color-bg-inset);
+  border: 1.5px solid var(--ep-color-border);
+  flex-shrink: 0;
+}
+
+.db-journey__milestone--reached .db-journey__milestone-dot {
+  background-color: var(--ep-color-brand);
+  border-color: var(--ep-color-brand-border);
+}
+
+.db-journey__milestone--reached {
+  color: var(--ep-color-brand-text);
+}
+
+/* ─── Sections 6+7: Two-column bottom row ─────────────────────────────────── */
+
+.db-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ep-space-6);
+}
+
+@media (max-width: 640px) {
+  .db-bottom-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Section 6: Community preview ───────────────────────────────────────── */
+
+.db-community {}
+
+.db-community__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ep-space-4);
+  padding-bottom: var(--ep-space-4);
+  border-bottom: var(--ep-border-default);
+  margin-bottom: var(--ep-space-4);
+}
+
+.db-community__title {
+  font-size: var(--ep-font-size-md);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+}
+
+.db-community__link,
+.db-rewards__link {
+  font-size: var(--ep-font-size-xs);
+  color: var(--ep-color-brand);
+  text-decoration: none;
+  font-weight: var(--ep-font-weight-medium);
+  white-space: nowrap;
+}
+
+.db-community__link:hover,
+.db-rewards__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.db-community__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.db-community__row {
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-3);
+  padding-block: var(--ep-space-3);
+  border-bottom: var(--ep-border-subtle);
+}
+
+.db-community__row:last-child {
+  border-bottom: none;
+}
+
+.db-community__rank {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-disabled);
+  width: 1.25rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.db-community__rank--top {
+  color: var(--ep-color-points-text);
+}
+
+.db-community__avatar {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: var(--ep-color-brand-muted);
+  border: var(--ep-border-width-thin) solid var(--ep-color-brand-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-brand);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.db-community__name {
+  flex: 1;
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-secondary);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.db-community__name--you {
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+}
+
+.db-community__pts {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-tertiary);
+  white-space: nowrap;
+}
+
+/* ─── Section 7: Rewards preview ─────────────────────────────────────────── */
+
+.db-rewards {}
+
+.db-rewards__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ep-space-4);
+  padding-bottom: var(--ep-space-4);
+  border-bottom: var(--ep-border-default);
+  margin-bottom: var(--ep-space-4);
+}
+
+.db-rewards__title {
+  font-size: var(--ep-font-size-md);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-text-primary);
+}
+
+.db-rewards__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.db-rewards__row {
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-3);
+  padding-block: var(--ep-space-3);
+  border-bottom: var(--ep-border-subtle);
+}
+
+.db-rewards__row:last-child {
+  border-bottom: none;
+}
+
+.db-rewards__icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--ep-radius-sm);
+  background-color: var(--ep-color-points-muted);
+  border: var(--ep-border-width-thin) solid var(--ep-color-points-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--ep-font-size-md);
+  flex-shrink: 0;
+}
+
+.db-rewards__name {
+  flex: 1;
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-secondary);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.db-rewards__cost {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  color: var(--ep-color-points-text);
+  background-color: var(--ep-color-points-muted);
+  border: var(--ep-border-width-thin) solid var(--ep-color-points-border);
+  padding: var(--ep-space-0-5) var(--ep-space-2);
+  border-radius: var(--ep-radius-sm);
+  white-space: nowrap;
+}
+
+/* ─── Skeleton states ─────────────────────────────────────────────────────── */
+
+.db-skeleton-row {
+  display: flex;
+  gap: var(--ep-space-3);
+  align-items: center;
+  padding-block: var(--ep-space-3);
+  border-bottom: var(--ep-border-subtle);
+}
+
+.db-skeleton-row:last-child { border-bottom: none; }
+
+/* ─── Error / Empty ───────────────────────────────────────────────────────── */
+
+.db-section-error {
+  padding: var(--ep-space-6);
+  border-radius: var(--ep-radius-md);
+  background-color: var(--ep-color-error-subtle);
+  border: var(--ep-border-width-thin) solid var(--ep-color-error-border);
+  color: var(--ep-color-error-text);
+  font-size: var(--ep-font-size-sm);
+}

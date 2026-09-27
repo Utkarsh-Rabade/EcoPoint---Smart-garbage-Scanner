@@ -97,21 +97,25 @@ export function StatusDot({
 
 type SubmissionStatus =
   | "pending"
+  | "processing"
   | "reviewing"
   | "verified"
   | "approved"
   | "rejected"
   | "failed"
+  | "review"
   | "draft";
 
 const statusLabels: Record<SubmissionStatus, string> = {
-  pending:   "Pending",
-  reviewing: "Under Review",
-  verified:  "Verified",
-  approved:  "Approved",
-  rejected:  "Rejected",
-  failed:    "Failed",
-  draft:     "Draft",
+  pending:    "Pending",
+  processing: "Processing",
+  reviewing:  "Under Review",
+  verified:   "Verified",
+  approved:   "Approved",
+  rejected:   "Rejected",
+  failed:     "Failed",
+  review:     "In Review",
+  draft:      "Draft",
 };
 
 interface StatusPillProps {

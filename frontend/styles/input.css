@@ -164,13 +164,16 @@
   align-items: center;
 }
 
-.ep-input-wrapper .ep-input {
+/* Only add left padding when an icon is present */
+.ep-input-wrapper:has(.ep-input-icon) .ep-input {
   padding-left: var(--ep-space-8);
 }
 
-.ep-input-wrapper .ep-input--prefix-lg {
+.ep-input-wrapper:has(.ep-input-icon) .ep-input--prefix-lg {
   padding-left: var(--ep-space-10);
 }
+
+/* When only a suffix is present (no icon), no left padding override needed */
 
 .ep-input-icon {
   position: absolute;
@@ -183,9 +186,9 @@
 
 .ep-input-suffix {
   position: absolute;
-  right: var(--ep-space-3);
+  right: var(--ep-space-2);
   color: var(--ep-color-text-tertiary);
-  pointer-events: none;
+  pointer-events: auto;   /* allow interactive elements (e.g., show/hide toggle) */
   display: flex;
   align-items: center;
 }

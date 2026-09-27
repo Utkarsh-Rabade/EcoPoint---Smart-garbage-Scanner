@@ -56,6 +56,19 @@
   color: var(--ep-color-text-tertiary);
 }
 
+.ep-status-pill--processing {
+  background-color: var(--ep-color-info-muted);
+  border-color: var(--ep-color-info-border);
+  color: var(--ep-color-info-text);
+}
+
+.ep-status-pill--review {
+  background-color: var(--ep-color-warning-muted);
+  border-color: var(--ep-color-warning-border);
+  color: var(--ep-color-warning-text);
+}
+
+
 /* ─── Banner — full-width strip ───────────────────────────────────────────── */
 
 .ep-banner {

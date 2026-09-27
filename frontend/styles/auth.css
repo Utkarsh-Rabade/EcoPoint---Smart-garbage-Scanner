@@ -1,0 +1,161 @@
+/*
+ * EcoPoints — Auth page styles (login + signup)
+ * ─────────────────────────────────────────────────────────────────────────────
+ * These styles live on top of the existing design system.
+ * They add only auth-specific layout and decorative elements.
+ * All values reference existing tokens — nothing is hardcoded.
+ */
+
+/* ── Card header: eyebrow + title + lead ────────────────────────────────── */
+
+.auth-header {
+  margin-bottom: var(--ep-space-7);
+  text-align: left;
+}
+
+.auth-header__eyebrow {
+  font-size: var(--ep-font-size-xs);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-widest);
+  text-transform: uppercase;
+  color: var(--ep-color-brand);
+  margin-bottom: var(--ep-space-2);
+}
+
+.auth-header__title {
+  font-size: var(--ep-font-size-2xl);
+  font-weight: var(--ep-font-weight-semibold);
+  letter-spacing: var(--ep-tracking-tight);
+  line-height: var(--ep-leading-tight);
+  color: var(--ep-color-text-primary);
+  margin-bottom: var(--ep-space-2);
+}
+
+.auth-header__lead {
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-tertiary);
+  line-height: var(--ep-leading-relaxed);
+}
+
+/* ── Form stack ─────────────────────────────────────────────────────────── */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ep-space-5);
+}
+
+/* ── Submit button — full width ─────────────────────────────────────────── */
+
+.auth-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--ep-space-2);
+}
+
+/* ── Password toggle button ─────────────────────────────────────────────── */
+
+.auth-pw-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--ep-radius-sm);
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ep-color-text-tertiary);
+  transition: color var(--ep-duration-fast) var(--ep-ease-out);
+  flex-shrink: 0;
+  /* Position is handled by InputWrapper's ep-input-suffix */
+}
+
+.auth-pw-toggle:hover {
+  color: var(--ep-color-text-secondary);
+}
+
+.auth-pw-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--ep-shadow-focus);
+}
+
+/* Ensure password input leaves room for the toggle */
+.auth-pw-input {
+  padding-right: var(--ep-space-10) !important;
+}
+
+/* ── Footer link ─────────────────────────────────────────────────────────── */
+
+.auth-footer {
+  margin-top: var(--ep-space-6);
+  padding-top: var(--ep-space-5);
+  border-top: var(--ep-border-subtle);
+  text-align: center;
+  font-size: var(--ep-font-size-sm);
+  color: var(--ep-color-text-tertiary);
+}
+
+.auth-footer a {
+  color: var(--ep-color-brand);
+  font-weight: var(--ep-font-weight-medium);
+  text-decoration: none;
+  transition: color var(--ep-duration-fast) var(--ep-ease-out);
+}
+
+.auth-footer a:hover {
+  color: var(--ep-color-brand-hover);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Alert inside auth card ─────────────────────────────────────────────── */
+
+.auth-alert {
+  margin-bottom: var(--ep-space-1);
+}
+
+/* ── Divider row ─────────────────────────────────────────────────────────── */
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--ep-space-3);
+  color: var(--ep-color-text-disabled);
+  font-size: var(--ep-font-size-xs);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--ep-color-border-subtle);
+}
+
+/* ── Password strength indicator ────────────────────────────────────────── */
+
+.auth-pw-strength {
+  display: flex;
+  gap: var(--ep-space-1);
+  margin-top: var(--ep-space-1-5);
+}
+
+.auth-pw-strength__bar {
+  flex: 1;
+  height: 3px;
+  border-radius: var(--ep-radius-full);
+  background-color: var(--ep-color-bg-inset);
+  transition: background-color var(--ep-duration-normal) var(--ep-ease-out);
+}
+
+.auth-pw-strength__bar--weak   { background-color: var(--ep-color-error); }
+.auth-pw-strength__bar--fair   { background-color: var(--ep-color-warning); }
+.auth-pw-strength__bar--good   { background-color: var(--ep-color-success); }
+
+.auth-pw-strength__label {
+  font-size: var(--ep-font-size-2xs);
+  color: var(--ep-color-text-tertiary);
+  margin-top: var(--ep-space-1);
+  line-height: 1;
+}

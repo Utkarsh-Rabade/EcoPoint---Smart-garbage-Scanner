@@ -8,8 +8,15 @@
  */
 
 import Link from "next/link";
+import type { Metadata } from "next";
 import "@/styles/shell.css";
 import "@/styles/tokens.css";
+
+export const metadata: Metadata = {
+  title: { template: "%s — EcoPoints", default: "EcoPoints" },
+  description: "Log in or create your EcoPoints account.",
+};
+
 
 export default function AuthLayout({
   children,

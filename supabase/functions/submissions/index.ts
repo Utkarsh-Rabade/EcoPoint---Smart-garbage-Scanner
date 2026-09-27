@@ -153,11 +153,24 @@ const createHandler = async (req: Request): Promise<Response> => {
         )
       }
 
-      // Return the submission data
+      // Generate a signed URL for the submission image (expires in 1 hour)
+      const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+        .from('submission-images')
+        .createSignedUrl(submission.image_url, 3600); // 3600 seconds = 1 hour
+
+      let imageUrl = submission.image_url; // fallback to original path
+      if (!signedUrlError && signedUrlData?.signedUrl) {
+        imageUrl = signedUrlData.signedUrl;
+      }
+
+      // Return the submission data with signed URL for the image
       console.log("=== SUBMISSIONS FUNCTION END (SUCCESS - GET) ===")
       return new Response(
         JSON.stringify({
-          submission,
+          submission: {
+            ...submission,
+            image_url: imageUrl
+          }
         }),
         {
           status: 200,

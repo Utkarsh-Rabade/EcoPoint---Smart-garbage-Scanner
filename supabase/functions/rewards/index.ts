@@ -61,56 +61,30 @@ const createHandler = async (req: Request): Promise<Response> => {
       )
     }
 
-    // Define available rewards
-    // In a real application, this would come from a rewards table
-    // For now, we'll define some static rewards
-    const rewards = [
-      {
-        id: "eco-bag",
-        name: "Eco-Friendly Shopping Bag",
-        description: "Reusable tote bag made from recycled materials",
-        points_required: 500,
-        icon: "🛍️",
-        category: "accessories"
-      },
-      {
-        id: "stainless-straw",
-        name: "Stainless Steel Straw Set",
-        description: "Set of 4 reusable straws with cleaning brush",
-        points_required: 300,
-        icon: "🥤",
-        category: "kitchen"
-      },
-      {
-        id: "bamboo-utensils",
-        name: "Bamboo Utensil Set",
-        description: "Travel cutlery set with case",
-        points_required: 400,
-        icon: "🍴",
-        category: "kitchen"
-      },
-      {
-        id: "tree-planting",
-        name: "Tree Planting Certificate",
-        description: "Have a tree planted in your name",
-        points_required: 1000,
-        icon: "🌳",
-        category: "environment"
-      },
-      {
-        id: "recycling-guide",
-        name: "Advanced Recycling Guide",
-        description: "Digital guide to recycling best practices",
-        points_required: 200,
-        icon: "📚",
-        category: "education"
-      }
-    ];
+    // Fetch rewards from the rewards table
+    const { data: rewards, error: rewardsError } = await supabase
+      .from('rewards')
+      .select('title, points_cost')
+      .eq('available', true)
+      .order('points_cost', { ascending: true });
 
-    // Return the rewards data
+    if (rewardsError) {
+      console.error("Rewards fetch error:", rewardsError)
+      return new Response(
+        JSON.stringify({
+          error: {
+            code: "REWARDS_FETCH_FAILED",
+            message: "Failed to fetch rewards",
+          },
+        }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      )
+    }
+
+    // Return the rewards data in the exact format requested
     return new Response(
       JSON.stringify({
-        rewards,
+        rewards: rewards || [],
       }),
       {
         status: 200,
