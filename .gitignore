@@ -17,3 +17,4 @@ supabase/.branches/
 coverage/
 dist/
 .tmp/
+supabase/.temp/
