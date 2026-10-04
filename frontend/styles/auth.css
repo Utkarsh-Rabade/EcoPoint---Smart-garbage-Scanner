@@ -1,16 +1,20 @@
 /*
  * EcoPoints — Auth page styles (login + signup)
  * ─────────────────────────────────────────────────────────────────────────────
- * These styles live on top of the existing design system.
- * They add only auth-specific layout and decorative elements.
- * All values reference existing tokens — nothing is hardcoded.
+ * Layered on top of the split layout defined in shell.css.
+ * Covers: page header, form stack, inputs, focus/error states,
+ * password toggle, strength meter, submit button, footer link.
+ *
+ * Design intent:
+ *   - Editorial, not "sign-in card" generic
+ *   - Compact vertical rhythm; generous focus rings
+ *   - All values reference design tokens
  */
 
-/* ── Card header: eyebrow + title + lead ────────────────────────────────── */
+/* ── Form page header ─────────────────────────────────────────────────────── */
 
 .auth-header {
-  margin-bottom: var(--ep-space-7);
-  text-align: left;
+  margin-bottom: var(--ep-space-8);
 }
 
 .auth-header__eyebrow {
@@ -24,36 +28,37 @@
 
 .auth-header__title {
   font-size: var(--ep-font-size-2xl);
-  font-weight: var(--ep-font-weight-semibold);
+  font-weight: var(--ep-font-weight-bold);
   letter-spacing: var(--ep-tracking-tight);
   line-height: var(--ep-leading-tight);
   color: var(--ep-color-text-primary);
-  margin-bottom: var(--ep-space-2);
+  margin: 0 0 var(--ep-space-2);
 }
 
 .auth-header__lead {
   font-size: var(--ep-font-size-sm);
   color: var(--ep-color-text-tertiary);
   line-height: var(--ep-leading-relaxed);
+  margin: 0;
 }
 
-/* ── Form stack ─────────────────────────────────────────────────────────── */
+/* ── Form stack ───────────────────────────────────────────────────────────── */
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: var(--ep-space-5);
+  gap: var(--ep-space-4-5, var(--ep-space-4));
 }
 
-/* ── Submit button — full width ─────────────────────────────────────────── */
+/* ── Submit button — full width ───────────────────────────────────────────── */
 
 .auth-submit {
   width: 100%;
   justify-content: center;
-  margin-top: var(--ep-space-2);
+  margin-top: var(--ep-space-3);
 }
 
-/* ── Password toggle button ─────────────────────────────────────────────── */
+/* ── Password toggle button ───────────────────────────────────────────────── */
 
 .auth-pw-toggle {
   display: flex;
@@ -66,18 +71,20 @@
   background: none;
   cursor: pointer;
   color: var(--ep-color-text-tertiary);
-  transition: color var(--ep-duration-fast) var(--ep-ease-out);
+  transition: color var(--ep-duration-fast) var(--ep-ease-out),
+              background-color var(--ep-duration-fast) var(--ep-ease-out);
   flex-shrink: 0;
-  /* Position is handled by InputWrapper's ep-input-suffix */
 }
 
 .auth-pw-toggle:hover {
   color: var(--ep-color-text-secondary);
+  background: var(--ep-color-bg-subtle);
 }
 
 .auth-pw-toggle:focus-visible {
   outline: none;
   box-shadow: var(--ep-shadow-focus);
+  border-radius: var(--ep-radius-sm);
 }
 
 /* Ensure password input leaves room for the toggle */
@@ -85,7 +92,7 @@
   padding-right: var(--ep-space-10) !important;
 }
 
-/* ── Footer link ─────────────────────────────────────────────────────────── */
+/* ── Footer link ──────────────────────────────────────────────────────────── */
 
 .auth-footer {
   margin-top: var(--ep-space-6);
@@ -98,7 +105,7 @@
 
 .auth-footer a {
   color: var(--ep-color-brand);
-  font-weight: var(--ep-font-weight-medium);
+  font-weight: var(--ep-font-weight-semibold);
   text-decoration: none;
   transition: color var(--ep-duration-fast) var(--ep-ease-out);
 }
@@ -109,13 +116,13 @@
   text-underline-offset: 2px;
 }
 
-/* ── Alert inside auth card ─────────────────────────────────────────────── */
+/* ── Alert inside auth panel ──────────────────────────────────────────────── */
 
 .auth-alert {
   margin-bottom: var(--ep-space-1);
 }
 
-/* ── Divider row ─────────────────────────────────────────────────────────── */
+/* ── Divider row ──────────────────────────────────────────────────────────── */
 
 .auth-divider {
   display: flex;
@@ -133,12 +140,12 @@
   background-color: var(--ep-color-border-subtle);
 }
 
-/* ── Password strength indicator ────────────────────────────────────────── */
+/* ── Password strength meter ──────────────────────────────────────────────── */
 
 .auth-pw-strength {
   display: flex;
   gap: var(--ep-space-1);
-  margin-top: var(--ep-space-1-5);
+  margin-top: var(--ep-space-2);
 }
 
 .auth-pw-strength__bar {
@@ -154,7 +161,7 @@
 .auth-pw-strength__bar--good   { background-color: var(--ep-color-success); }
 
 .auth-pw-strength__label {
-  font-size: var(--ep-font-size-2xs);
+  font-size: var(--ep-font-size-2xs, 0.6875rem);
   color: var(--ep-color-text-tertiary);
   margin-top: var(--ep-space-1);
   line-height: 1;

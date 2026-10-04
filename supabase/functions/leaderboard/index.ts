@@ -2,17 +2,18 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!
+const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+}
 
 const createHandler = async (req: Request): Promise<Response> => {
   // Handle CORS
   if (req.method === "OPTIONS") {
-    return new Response("ok", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
-    })
+    return new Response("ok", { headers: corsHeaders })
   }
 
   if (req.method !== "GET") {
@@ -20,7 +21,7 @@ const createHandler = async (req: Request): Promise<Response> => {
       JSON.stringify({ error: { code: "METHOD_NOT_ALLOWED", message: "Method not allowed" } }),
       {
         status: 405,
-        headers: { "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     )
   }
@@ -36,17 +37,24 @@ const createHandler = async (req: Request): Promise<Response> => {
             message: "Authorization header missing or invalid",
           },
         }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
 
     const accessToken = authHeader.substring(7) // Remove 'Bearer ' prefix
 
     // Create supabase client with the user's JWT for RLS
-    const supabase = createClient(supabaseUrl, accessToken)
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+      auth: { persistSession: false },
+    })
 
     // Get the user from Supabase using the JWT
-    const { data: { user }, error: userError } = await supabase.auth.getUser(accessToken)
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
 
     if (userError || !user) {
       console.error("Get user error:", userError)
@@ -57,7 +65,7 @@ const createHandler = async (req: Request): Promise<Response> => {
             message: "Invalid or expired token",
           },
         }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
 
@@ -77,7 +85,7 @@ const createHandler = async (req: Request): Promise<Response> => {
             message: "Failed to fetch leaderboard",
           },
         }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
 
@@ -94,7 +102,7 @@ const createHandler = async (req: Request): Promise<Response> => {
       }),
       {
         status: 200,
-        headers: { "Content-Type": "application/json" }
+        headers: { ...corsHeaders, "Content-Type": "application/json" }
       }
     )
   } catch (err) {
@@ -103,7 +111,7 @@ const createHandler = async (req: Request): Promise<Response> => {
       JSON.stringify({
         error: { code: "INTERNAL_ERROR", message: "Internal server error" },
       }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     )
   }
 }
